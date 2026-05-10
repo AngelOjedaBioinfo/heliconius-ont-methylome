@@ -9,12 +9,26 @@ Para garantizar la reproducibilidad científica, se detallan las versiones valid
 * **Manejo de Alineamientos:** `samtools v1.16.1` y `minimap2 v2.24`.
 * **Aritmética Genómica:** `bedtools v2.30.0`.
 * **Análisis Estadístico:** `R v4.2.2` con el paquete `DSS v2.46.0` (Bioconductor).
-* **Visualización:** `ggplot2`, `scales` y `RColorBrewer`.
+* **Visualización:** `ggplot2`, `scales` y `patchwork`.
 
-## 2. Lógica de Filtrado y Parámetros Críticos
-* **Umbral Probabilístico (0.79):** Definido a partir del percentil 10 de la distribución empírica de probabilidades de modkit. Este valor asegura un equilibrio entre sensibilidad y especificidad, alineándose con los umbrales de ~0.81 recomendados por ONT para citosinas no modificadas.
-* **Cobertura Mínima:** 10x por sitio CpG en ambas condiciones.
-* **Modelo Estadístico:** Test de Wald basado en una distribución Beta-binomial con estimación de dispersión compartida (`equal.disp = TRUE`), optimizado para pooling de muestras sin réplicas.
+## 2. Metodología Visual y Toma de Decisiones
+Para garantizar la transparencia en el análisis, se detallan los flujos de trabajo y los criterios técnicos adoptados:
+
+### 2.1 Pipeline General de Análisis
+Flujo completo desde el basecalling con Dorado dúplex hasta la identificación de regiones diferencialmente metiladas (DMRs).
+![Pipeline General](assets/figures/A_pipeline_general.png)
+
+### 2.2 Calibración del Umbral Probabilístico
+A diferencia del umbral por defecto (0.5), se realizó una calibración empírica basada en el p10 de la distribución de modkit (0.793). Esto asegura que las llamadas sean compatibles con las tasas globales reportadas en la literatura para lepidópteros.
+![Decisión Umbral](assets/figures/B_decision_umbral.png)
+
+### 2.3 Estimación de Dispersión en DSS
+Dado el diseño experimental (n=1 pooled), se adoptó el método `smoothing=TRUE` (Park & Wu, 2016) para la estimación del parámetro de dispersión, optimizando la sensibilidad en la detección de DMRs.
+![Decisión Dispersión](assets/figures/C_decision_dispersion.png)
+
+### 2.4 Lógica de Clasificación Genómica
+Los sitios CpG se categorizaron mediante intersecciones jerárquicas con el archivo de anotación `Hlat.v1.1.CAT.gff3`, identificando intrones por exclusión.
+![Clasificación Contexto](assets/figures/D_clasificacion_contexto.png)
 
 ## 3. Arquitectura del Proyecto (Scripts)
 
@@ -26,8 +40,8 @@ Para garantizar la reproducibilidad científica, se detallan las versiones valid
 
 ### Análisis y Visualización (R)
 - `scripts/R/dss_analysis.R`: Detección estadística de DML y DMR.
-- `scripts/R/genomic_context.R`: Anotación funcional contra GFF3 (Exones, Intrones e Intergénico).
-- `scripts/R/dmr_visualization.R`: Generación de perfiles de metilación para genes candidatos (*dnmt1*, *pak*, *sin3a*).
+- `scripts/R/genomic_context.R`: Anotación funcional (Exones, Intrones e Intergénico).
+- `scripts/R/dmr_visualization.R`: Generación de perfiles de metilación para genes candidatos.
 
 ## 4. Instrucciones de Uso
 1. **Ambiente:** Recree el entorno con `mamba env create -f bioinfo.yml`.
