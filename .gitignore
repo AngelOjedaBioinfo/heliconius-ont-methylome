@@ -17,3 +17,4 @@ test_pipeline/
 
 # Archivos de sistema
 .DS_Store
+nohup.out
