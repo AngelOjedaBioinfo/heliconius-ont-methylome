@@ -1,6 +1,5 @@
 ---
 config:
-  layout: fixed
   theme: base
   themeVariables:
     primaryColor: '#E8F4F8'
@@ -10,22 +9,22 @@ config:
     fontSize: 14px
 ---
 flowchart TB
- subgraph Calibracion["NO — Calibración"]
+ subgraph Calibration["NO — Calibration"]
     direction LR
-        D["<b>Calibración empírica</b><br>modkit sample-probs<br>10,042 lecturas muestreadas<br>por archivo"]
-        E["<b>Distribución de probabilidades</b><br>5mC: pico ~1.0<br>5hmC: pico ~0.5"]
-        F["<b>Percentil 10</b><br>= 0.793 en ambas muestras"]
-        G["<b>Aplicación simétrica</b><br>--mod-thresholds m:0.79<br>--mod-thresholds h:0.79"]
+        D["<b>Empirical calibration</b><br>modkit sample-probs<br>10,042 reads sampled<br>per file"]
+        E["<b>Probability distribution</b><br>5mC: peak ~1.0<br>5hmC: peak ~0.5"]
+        F["<b>10th percentile</b><br>= 0.793 in both samples"]
+        G["<b>Symmetric application</b><br>--mod-thresholds m:0.79<br>--mod-thresholds h:0.79"]
   end
- subgraph Directo["SÍ — Compatible"]
+ subgraph Direct["YES — Compatible"]
     direction LR
-        H["<b>Tasas globales obtenidas</b><br>5mC: 0.86–0.89%<br>5hmC: 0.21–0.23%"]
-        I["✓ Compatible con<br>literatura de lepidópteros"]
+        H["<b>Global rates obtained</b><br>5mC: 0.86–0.89%<br>5hmC: 0.21–0.23%"]
+        I["✓ Compatible with<br>lepidopteran literature"]
   end
-    A["<b>Datos modBAM ONT</b><br>5mC + 5hmC con etiquetas MM/ML"] --> B["<b>Umbral por defecto</b><br>modkit threshold = 0.5"]
-    B --> C{"¿Tasas globales<br>compatibles con<br>literatura?"}
+    A["<b>modBAM ONT data</b><br>5mC + 5hmC with MM/ML tags"] --> B["<b>Default threshold</b><br>modkit threshold = 0.5"]
+    B --> C{"Global rates<br>compatible with<br>literature?"}
     C -- NO --> D
-    C -- SÍ --> H
+    C -- YES --> H
     D --> E
     E --> F
     F --> G

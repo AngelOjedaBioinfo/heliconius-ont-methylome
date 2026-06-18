@@ -9,14 +9,14 @@ config:
     fontSize: 14px
 ---
 flowchart TD
-    A["<b>Sitio CpG</b><br/>BEDMethyl filtrado cov ≥10×"]:::input
-    A --> B{"¿Solapa con<br/>una característica<br/>'exon' del GFF3?"}
-    B -->|"Sí<br/>bedtools intersect -u"| C["<b>Exón</b><br/>incluye CDS y UTR"]:::exon
-    B -->|"No"| D{"¿Solapa con<br/>una característica<br/>'gene' del GFF3?"}
-    D -->|"Sí<br/>bedtools intersect -u"| E["<b>Intrón</b><br/>= dentro de gen<br/>pero fuera de exón"]:::intron
-    D -->|"No"| F["<b>Intergénico</b><br/>bedtools intersect -v<br/>vs genes.gff3"]:::inter
+    A["<b>CpG site</b><br/>BEDMethyl filtered cov ≥10×"]:::input
+    A --> B{"Overlaps an<br/>'exon' feature<br/>in GFF3?"}
+    B -->|"Yes<br/>bedtools intersect -u"| C["<b>Exon</b><br/>includes CDS and UTR"]:::exon
+    B -->|"No"| D{"Overlaps a<br/>'gene' feature<br/>in GFF3?"}
+    D -->|"Yes<br/>bedtools intersect -u"| E["<b>Intron</b><br/>= within gene body<br/>but outside exon"]:::intron
+    D -->|"No"| F["<b>Intergenic</b><br/>bedtools intersect -v<br/>vs genes.gff3"]:::inter
 
-    G["<i>Nota: los intrones no están explícitamente anotados<br/>en GFF3, se identifican por exclusión</i>"]:::note
+    G["<i>Note: introns are not explicitly annotated<br/>in GFF3; identified by exclusion</i>"]:::note
 
     classDef input fill:#D1E8F2,stroke:#2C7DA0,stroke-width:2px,color:#1B3A4B
     classDef exon fill:#FFB74D,stroke:#E65100,stroke-width:2px,color:#3E2723

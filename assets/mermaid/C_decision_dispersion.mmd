@@ -9,20 +9,20 @@ config:
     fontSize: 14px
 ---
 flowchart TD
-    A["<b>Diseño experimental</b><br/>n=1 por condición<br/>(10 cerebros pooled por grupo)"]:::input
-    A --> B{"¿Cómo estimar<br/>el parámetro de dispersión<br/>phi en DSS?"}
+    A["<b>Experimental design</b><br/>n=1 per condition<br/>(10 pooled brains per group)"]:::input
+    A --> B{"How to estimate<br/>dispersion parameter<br/>phi in DSS?"}
 
-    B --> C["<b>Opción 1</b><br/>smoothing=FALSE"]
-    C --> C2["❌ Rechazado por DSS<br/><i>'There is no biological replicates.<br/>Please set smoothing=TRUE<br/>or equal.disp=TRUE'</i>"]:::rejected
+    B --> C["<b>Option 1</b><br/>smoothing=FALSE"]
+    C --> C2["❌ Rejected by DSS<br/><i>'There is no biological replicates.<br/>Please set smoothing=TRUE<br/>or equal.disp=TRUE'</i>"]:::rejected
 
-    B --> D["<b>Opción 2</b><br/>smoothing=TRUE<br/>(kernel local 500 bp default)"]:::process
-    D --> D2["6,197 DMRs 5mC<br/>205 DMRs 5hmC"]:::result
+    B --> D["<b>Option 2</b><br/>smoothing=TRUE<br/>(local kernel, 500 bp default)"]:::process
+    D --> D2["Higher sensitivity<br/>(case study: 6,197 5mC | 205 5hmC)"]:::result
 
-    B --> E["<b>Opción 3</b><br/>equal.disp=TRUE<br/>(varianza compartida)"]:::process
-    E --> E2["62 DMRs 5mC<br/>0 DMRs 5hmC"]:::sensitivity
+    B --> E["<b>Option 3</b><br/>equal.disp=TRUE<br/>(shared variance)"]:::process
+    E --> E2["Lower sensitivity<br/>(case study: 62 5mC | 0 5hmC)"]:::sensitivity
 
-    D2 --> F["<b>Decisión</b><br/>Adoptar smoothing=TRUE<br/>(recomendación Park &amp; Wu 2016<br/>para diseños sin réplicas)"]:::output
-    E2 --> G["<b>Análisis de sensibilidad</b><br/>reportado en §4.9 Limitaciones<br/>magnitud absoluta DMRs<br/>depende del método"]:::warning
+    D2 --> F["<b>Decision</b><br/>Adopt smoothing=TRUE<br/>(Park &amp; Wu 2016 recommendation<br/>for designs without replicates)"]:::output
+    E2 --> G["<b>Sensitivity analysis</b><br/>reported in thesis §4.9<br/>absolute DMR count<br/>depends on method"]:::warning
 
     classDef input fill:#D1E8F2,stroke:#2C7DA0,stroke-width:2px,color:#1B3A4B
     classDef process fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#3E2723

@@ -1,6 +1,5 @@
 ---
 config:
-  layout: elk
   theme: base
   themeVariables:
     primaryColor: '#E8F4F8'
@@ -10,40 +9,40 @@ config:
     fontSize: 12px
 ---
 flowchart LR
-    subgraph P1 ["I: Crudos & Calidad"]
+    subgraph P1 ["I: Raw Data & Quality"]
         direction TB
-        A["<b>modBAM</b><br/>Dorado dúplex<br/>+ minimap2"]:::input
-        B["<b>QC & Umbral</b><br/>modkit probs<br/>p10 = 0.793"]
+        A["<b>modBAM</b><br/>Dorado duplex<br/>+ minimap2"]:::input
+        B["<b>QC & Threshold</b><br/>modkit probs<br/>empirical p10"]
         A --> B
     end
 
-    subgraph P2 ["II: Procesamiento (Bash)"]
+    subgraph P2 ["II: Processing (Bash)"]
         direction TB
-        D["<b>modkit pileup</b><br/>~44.5M CpG"]
-        E["<b>Filtros & Intersect</b><br/>≥10× | ~12M Comunes"]
+        D["<b>modkit pileup</b><br/>~44.5M CpG sites"]
+        E["<b>Filters & Intersect</b><br/>≥10× coverage"]
         D --> E
     end
 
-    subgraph P3 ["III: Estadística (R/DSS)"]
+    subgraph P3 ["III: Statistics (R/DSS)"]
         direction TB
         H["<b>DSS v2.58.0</b><br/>Wald Test + DMRs"]
-        I["<b>DMRs Finales</b><br/>6,197 5mC | 205 5hmC"]:::result
+        I["<b>DMR tables</b><br/>5mC + 5hmC BED files"]:::result
         H --> I
     end
 
-    subgraph P4 ["IV: Salida"]
+    subgraph P4 ["IV: Output"]
         direction TB
-        J["<b>Anotación</b><br/>GFF3 + BLASTx"]
-        L["<b>Figuras</b><br/>ggplot2 + patchwork"]:::output
+        J["<b>Annotation</b><br/>GFF3 + BLASTx"]
+        L["<b>Figures</b><br/>ggplot2 + patchwork"]:::output
         J --> L
     end
 
-    %% Conexiones principales
+    %% Main connections
     P1 --> P2
     P2 --> P3
     P3 --> P4
 
-    %% Estilos
+    %% Styles
     classDef input fill:#D1E8F2,stroke:#2C7DA0,stroke-width:2px,color:#1B3A4B
     classDef result fill:#FFE0B2,stroke:#E65100,stroke-width:2px,color:#3E2723
     classDef output fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
